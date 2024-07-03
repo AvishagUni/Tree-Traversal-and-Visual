@@ -12,7 +12,11 @@ public:
 
     Node(T val) : value(val) {}
 
-    T get_value() const {
+    T& get_value() {  // Returning a reference to the value
+        return value;
+    }
+
+    const T& get_value() const {  // For const correctness
         return value;
     }
 
