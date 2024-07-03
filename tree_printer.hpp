@@ -13,9 +13,22 @@
 template <typename T, int K>
 class Tree;
 
+/**
+ * @brief A class for printing the tree structure to a DOT file and generating a PNG image.
+ * 
+ * @tparam T The type of the values stored in the tree nodes.
+ * @tparam K The maximum number of children each node can have.
+ */
 template <typename T, int K>
 class TreePrinter {
 public:
+    /**
+     * @brief Prints the tree structure to a DOT file and generates a PNG image.
+     * 
+     * @param tree The tree to be printed.
+     * @param dot_filename The filename for the DOT file.
+     * @param png_filename The filename for the PNG file.
+     */
     void print(Tree<T, K> &tree, const std::string &dot_filename, const std::string &png_filename) {
         std::ofstream file(dot_filename);
         if (!file.is_open()) {
@@ -38,6 +51,12 @@ public:
     }
 
 private:
+    /**
+     * @brief Recursively prints nodes and their children to the DOT file.
+     * 
+     * @param file The output file stream for the DOT file.
+     * @param node The current node to print.
+     */
     void printNode(std::ofstream &file, Node<T>* node) {
         for (Node<T>* child : node->children) {
             if (child) {
