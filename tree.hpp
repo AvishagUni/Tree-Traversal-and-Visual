@@ -12,18 +12,22 @@
 #include <iostream>
 #include "tree_printer.hpp"
 
+// Template class for k-ary tree
 template <typename T, int K = 2>
 class Tree {
 private:
-    Node<T>* root;
+    Node<T>* root;  // Root node of the tree
 
 public:
+    // Constructor
     Tree() : root(nullptr) {}
 
+    // Destructor
     ~Tree() {
         clear();
     }
 
+    // Add root node
     void add_root(Node<T>& node) {
         if (!root) {
             root = new Node<T>(node.value);
@@ -32,6 +36,7 @@ public:
         }
     }
 
+    // Add a child node to a parent node
     void add_sub_node(Node<T>& parent_node, Node<T>& child_node) {
         Node<T>* parent = find(root, parent_node.value);
         if (parent == nullptr || parent->children.size() >= K) {
@@ -41,6 +46,7 @@ public:
         parent->add_child(new_child);
     }
 
+    // Find a node with the given value
     Node<T>* find(Node<T>* node, T value) {
         if (!node) return nullptr;
         if (node->value == value) return node;
@@ -51,11 +57,13 @@ public:
         return nullptr;
     }
 
+    // Clear the tree
     void clear() {
         clear(root);
         root = nullptr;
     }
 
+    // Clear a node and its children
     void clear(Node<T>* node) {
         if (!node) return;
         for (Node<T>* child : node->children) {
@@ -64,10 +72,12 @@ public:
         delete node;
     }
 
+    // Get the root node
     Node<T>* getRoot() const {
         return root;
     }
 
+    // Print the tree using TreePrinter
     void print() {
         TreePrinter<T, K> printer;
         printer.print(*this);
@@ -76,7 +86,8 @@ public:
     // Pre-Order Iterator
     class PreOrderIterator {
     private:
-        std::stack<Node<T>*> stack;
+        std::stack<Node<T>*> stack;  // Stack to manage the nodes
+
     public:
         PreOrderIterator(Node<T>* root) {
             if (root) stack.push(root);
@@ -185,7 +196,6 @@ public:
         }
 
         Node<T>* operator*() const {
-            // return stack.top()->get_value();
             return stack.top();
         }
 
@@ -258,10 +268,11 @@ public:
         }
     };
 
+    // Heap Iterator (for min-heap conversion)
     class HeapIterator {
     private:
-        std::vector<Node<T>*> heap;  // for the heap nodes
-        size_t index;                    // the index of the current node in the heap
+        std::vector<Node<T>*> heap;  // Vector to store heap nodes
+        size_t index;  // Index for current node in the heap
 
     public:
         HeapIterator(Node<T>* root) {
@@ -270,7 +281,7 @@ public:
                 return;
             }
 
-            // Put all the nodes in the tree in a vector using BFS
+            // Collect all nodes in the tree using BFS
             std::queue<Node<T>*> node_queue;
             node_queue.push(root);
 
@@ -283,7 +294,7 @@ public:
                 }
             }
 
-            // Make the vector a heap
+            // Convert the vector to a min-heap
             std::make_heap(heap.begin(), heap.end(), [](Node<T>* a, Node<T>* b) { return a->get_value() > b->get_value(); });
         }
 
@@ -304,7 +315,7 @@ public:
         bool operator!=(const HeapIterator& other) const { return !(*this == other); }
     };
 
-
+    // Iterator functions
     PreOrderIterator begin_pre_order() { return PreOrderIterator(root); }
     PreOrderIterator end_pre_order() { return PreOrderIterator(nullptr); }
 
@@ -323,7 +334,7 @@ public:
     HeapIterator begin_heap() { return HeapIterator(root); }
     HeapIterator end_heap() { return HeapIterator(nullptr); }
 
-    // myHeap method to transform the tree into a minimum heap
+    // Transform the tree into a minimum heap
     void myHeap() {
         std::vector<Node<T>*> nodes;
         collectNodes(root, nodes);
@@ -332,6 +343,7 @@ public:
     }
 
 private:
+    // Collect nodes for heap transformation
     void collectNodes(Node<T>* node, std::vector<Node<T>*>& nodes) {
         if (!node) return;
         nodes.push_back(node);
@@ -340,6 +352,7 @@ private:
         }
     }
 
+    // Build the heap from collected nodes
     void buildHeap(const std::vector<Node<T>*>& nodes) {
         if (nodes.empty()) return;
         root = nodes[0];
