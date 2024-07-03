@@ -21,58 +21,7 @@ Files
 Dependencies
 
     Graphviz: Required for generating PNG images from DOT files.
-    Qt: Required for GUI elements (optional if only using Graphviz).
-
-Installation
-Installing Graphviz
-
-For Ubuntu/Debian:
-
-sh
-
-sudo apt-get install graphviz
-
-For macOS:
-
-sh
-
-brew install graphviz
-
-Compiling the Project
-
-    Clean previous builds (if any):
-
-    sh
-
-make clean
-
-Compile the main program:
-
-sh
-
-make
-
-Compile and run the tests:
-
-sh
-
-    make test
-
-Usage
-Running the Main Program
-
-sh
-
-./tree_demo
-
-This will execute the main program which demonstrates the creation of different trees, performs various tree traversals, and generates PNG images of the tree structures.
-Running the Tests
-
-sh
-
-make test
-
-This will compile and run the test suite to verify the correctness of the tree implementation.
+    
 Demonstrations
 Binary Tree (Doubles)
 
@@ -101,14 +50,6 @@ String Tree
 Complex Tree
 
     DFS Scan: (1.0, 1.1), (-2.2, -2.2), (-5.5, 1.5), (6.6, 0), (0.3, -1.3), (7.7, 1), (8.8, 1.8), (4.4, 4.4)
-
-Cleaning Up
-
-To remove all generated files including object files, executables, and PNG images:
-
-sh
-
-make clean
 
 Conclusion
 
