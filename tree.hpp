@@ -8,7 +8,6 @@
 #include <stdexcept>
 #include <algorithm>
 #include <iostream>
-#include <QWidget>
 #include "tree_printer.hpp"
 
 template <typename T, int K = 2>
@@ -257,37 +256,22 @@ public:
         }
     };
 
-    // Heap Iterator (Min-Heap conversion)
     class HeapIterator {
     private:
-        std::vector<Node<T>*> heap;
-        size_t index;
+        std::vector<Node<T>*> heap;  // for the heap nodes
+        size_t index;                    // the index of the current node in the heap
 
-        // void heapify(Node<T>* node) {
-        //     index = 0;
-        //     if (node == nullptr) {
-        //         return;
-        //     }
-        //     std::cout << "Heapify: Starting BFS traversal for heap construction." << std::endl;
-        //     for (auto it = BFSIterator(node); it != BFSIterator(nullptr); ++it) {
-        //         heap.push_back(*it);
-        //         std::cout << "Heapify: Adding node with value: " << (*it)->get_value().toString() << std::endl;
-        //     }
-        //     std::cout << "Heapify: Finished BFS traversal. Building heap." << std::endl;
-        //     std::make_heap(heap.begin(), heap.end(), [](Node<T>* a, Node<T>* b) { return a->value > b->value; });
-        //     std::cout << "Heapify: Heap construction completed." << std::endl;
-        // }
-
-        void heapify(Node<T>* node) {
+    public:
+        HeapIterator(Node<T>* root) {
             index = 0;
-            if (node == nullptr) {
+            if (root == nullptr) {
                 return;
             }
 
+            // Put all the nodes in the tree in a vector using BFS
             std::queue<Node<T>*> node_queue;
-            node_queue.push(node);
+            node_queue.push(root);
 
-            // Perform BFS to collect all nodes in the heap
             while (!node_queue.empty()) {
                 Node<T>* current_node = node_queue.front();
                 node_queue.pop();
@@ -297,34 +281,27 @@ public:
                 }
             }
 
-            std::make_heap(heap.begin(), heap.end(), [](Node<T>* a, Node<T>* b) { return a->value > b->value; });
+            // Make the vector a heap
+            std::make_heap(heap.begin(), heap.end(), [](Node<T>* a, Node<T>* b) { return a->get_value() > b->get_value(); });
         }
 
-    public:
-        HeapIterator(Node<T>* root) : index(0) {
-            if (root) {
-                heapify(root);
-            }
-        }
+        T& operator*() { return heap.front()->get_value(); }
 
-        bool operator==(const HeapIterator& other) const { return index == other.index && heap.size() == other.heap.size(); }
-        bool operator!=(const HeapIterator& other) const { return !(*this == other); }
+        Node<T>* operator->() { return heap.front(); }
 
         HeapIterator& operator++() {
-            std::cout << "HeapIterator: Incrementing iterator." << std::endl;
-            std::pop_heap(heap.begin(), heap.end() - index, [](Node<T>* a, Node<T>* b) { return a->value > b->value; });
-            index++;
+            if (heap.empty()) {
+                return *this;
+            }
+            std::pop_heap(heap.begin(), heap.end(), [](Node<T>* a, Node<T>* b) { return a->get_value() > b->get_value(); });
+            heap.pop_back();
             return *this;
         }
 
-        Node<T>* operator*() const {
-            return heap[index];
-        }
-
-        Node<T>* operator->() const {
-            return heap[0];
-        }
+        bool operator==(const HeapIterator& other) const { return heap.size() == other.heap.size(); }
+        bool operator!=(const HeapIterator& other) const { return !(*this == other); }
     };
+
 
     PreOrderIterator begin_pre_order() { return PreOrderIterator(root); }
     PreOrderIterator end_pre_order() { return PreOrderIterator(nullptr); }
