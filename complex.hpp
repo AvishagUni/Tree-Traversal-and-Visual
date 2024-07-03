@@ -2,7 +2,9 @@
 #define COMPLEX_HPP
 
 #include <iostream>
-#include <string>
+#include <cmath>
+
+using namespace std;
 
 class Complex {
 public:
@@ -39,6 +41,8 @@ public:
         return os;
     }
 };
+
+#endif // COMPLEX_HPP
 
 #endif // COMPLEX_HPP
 
