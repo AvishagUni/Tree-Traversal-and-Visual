@@ -203,7 +203,6 @@ void test_dfs_traversal() {
     delete n2; // Clean up
 }
 
-// Function to test heap traversal
 void test_heap_traversal() {
     std::cout << "Running test_heap_traversal..." << std::endl;
     Tree<Complex> tree;
@@ -216,19 +215,17 @@ void test_heap_traversal() {
     tree.add_root(root_node);
     tree.add_sub_node(root_node, n1);
     tree.add_sub_node(root_node, n2);
-    tree.myHeap();
-    std::cout << "Continuing after myHeap" << std::endl;
 
     std::vector<Complex> result;
     for (auto it = tree.begin_heap(); it != tree.end_heap(); ++it) {
-        std::cout << "Heap traversal: Current node value: " << (*it)->get_value().toString() << std::endl;
-        result.push_back((*it)->get_value());
+        std::cout << "Heap traversal: Current node value: " << *it << std::endl;
+        result.push_back(*it);
     }
 
     // Debug print
     std::cout << "Heap traversal result:" << std::endl;
     for (const auto& complex : result) {
-        std::cout << complex.toString() << std::endl;
+        std::cout << complex << std::endl;
     }
 
     assert(result[0] == c1);
@@ -236,8 +233,6 @@ void test_heap_traversal() {
     assert(result[2] == root_complex);
     std::cout << "test_heap_traversal passed!" << std::endl;
 }
-
-
 
 // Function to test finding a node
 void test_find_node() {
@@ -488,34 +483,30 @@ void test_pre_order_one_child() {
     delete n1; // Clean up
 }
 
-// Function to test heap traversal with one child
 void test_heap_one_child() {
     std::cout << "Running test_heap_one_child..." << std::endl;
     Tree<Complex> tree;
     Complex root_complex(2.0, 3.0);
     Complex c1(1.0, 2.0);
-    Node<Complex>* root_node = new Node<Complex>(root_complex);
-    Node<Complex>* n1 = new Node<Complex>(c1);
-    tree.add_root(*root_node);
-    tree.add_sub_node(*root_node, *n1);
-    tree.myHeap(); // Uncomment if you have implemented myHeap method
+    Node<Complex> root_node(root_complex);
+    Node<Complex> n1(c1);
+    tree.add_root(root_node);
+    tree.add_sub_node(root_node, n1);
 
     std::vector<Complex> result;
     for (auto it = tree.begin_heap(); it != tree.end_heap(); ++it) {
-        result.push_back((*it)->get_value());
+        result.push_back(*it);
     }
 
     // Debug print
     std::cout << "Heap traversal with one child result:" << std::endl;
     for (const auto& complex : result) {
-        std::cout << complex.toString() << std::endl;
+        std::cout << complex << std::endl;
     }
 
     assert(result[0] == c1);
     assert(result[1] == root_complex);
     std::cout << "test_heap_one_child passed!" << std::endl;
-    delete root_node; // Clean up
-    delete n1; // Clean up
 }
 
 // Function to test complex number equality
@@ -547,7 +538,7 @@ int main() {
     test_in_order_traversal();
     test_bfs_traversal();
     test_dfs_traversal();
-    // test_heap_traversal();
+    test_heap_traversal();
     test_find_node();
     test_clear_tree();
     test_add_multiple_children();
@@ -557,7 +548,7 @@ int main() {
     test_bfs_one_child();
     test_dfs_one_child();
     test_pre_order_one_child();
-    // test_heap_one_child();
+    test_heap_one_child();
     test_complex_equality();
     test_complex_to_string();
     std::cout << "All tests passed!" << std::endl;
