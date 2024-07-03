@@ -1,46 +1,115 @@
 README
-Project Title: Tree Visualization with Qt
+Tree Visualization and Traversal
 
-This project implements a tree data structure in C++ with various traversal methods and a GUI-based visualization using Qt. The tree can store elements of different types, including user-defined types like complex numbers. The project includes the necessary classes to create, manipulate, and visualize k-ary trees (where each node can have up to k children).
+This project demonstrates the implementation of a k-ary tree data structure, various tree traversal methods, and visualization using Graphviz. The tree can contain nodes with different types of values, such as integers, strings, and complex numbers.
+Features
 
-Classes and Methods
-Tree Class
+    Tree Structure: Implementation of a k-ary tree where each node can have up to k children.
+    Tree Traversals: Includes in-order, pre-order, post-order, BFS, and DFS traversals.
+    Tree Visualization: Uses Graphviz to visualize the tree structure as PNG images.
+    Complex Number Support: Demonstrates the use of a custom Complex class within the tree.
 
-The Tree class represents a generic k-ary tree.
-Methods:
+Files
 
-    void add_root(Node<T>& node): Adds the root node to the tree.
-    void add_sub_node(Node<T>& parent_node, Node<T>& child_node): Adds a child node to a specified parent node.
-    void print(): Displays the tree structure using a GUI.
+    main.cpp: Contains the main function and demonstration of the tree functionalities.
+    tests.cpp: Contains various test functions to ensure the correctness of the tree operations.
+    tree.hpp: Header file for the tree implementation.
+    tree_printer.hpp: Header file for the tree visualization using Graphviz.
+    node.hpp: Header file for the tree node implementation.
+    complex.hpp: Header file for the custom Complex class.
 
-Iterators:
+Dependencies
 
-    Pre-Order Iterator: Traverses the tree in pre-order.
-    Post-Order Iterator: Traverses the tree in post-order.
-    In-Order Iterator: Traverses the tree in in-order (binary trees only).
-    BFS Iterator: Traverses the tree using breadth-first search.
-    DFS Iterator: Traverses the tree using depth-first search.
-    Heap Iterator: Converts the tree into a min-heap and traverses it.
+    Graphviz: Required for generating PNG images from DOT files.
+    Qt: Required for GUI elements (optional if only using Graphviz).
 
-Node Class
+Installation
+Installing Graphviz
 
-The Node class represents a node in the tree.
-Methods:
+For Ubuntu/Debian:
 
-    T get_value(): Returns the value stored in the node.
-    void add_child(Node<T>* child): Adds a child node.
+sh
 
-TreePrinter Class
+sudo apt-get install graphviz
 
-The TreePrinter class visualizes the tree structure using Qt.
-Methods:
+For macOS:
 
-    void print(Tree<T, K>& tree): Prints the tree using Qt's graphics view.
+sh
 
-Complex Class
+brew install graphviz
 
-The Complex class represents complex numbers for demonstration purposes.
-Methods:
+Compiling the Project
 
-    Complex(double real, double imag): Constructor to initialize a complex number.
-    std::string toString(): Returns a string representation of the complex number.
+    Clean previous builds (if any):
+
+    sh
+
+make clean
+
+Compile the main program:
+
+sh
+
+make
+
+Compile and run the tests:
+
+sh
+
+    make test
+
+Usage
+Running the Main Program
+
+sh
+
+./tree_demo
+
+This will execute the main program which demonstrates the creation of different trees, performs various tree traversals, and generates PNG images of the tree structures.
+Running the Tests
+
+sh
+
+make test
+
+This will compile and run the test suite to verify the correctness of the tree implementation.
+Demonstrations
+Binary Tree (Doubles)
+
+    In-order Scan: 1.4, 1.2, 1.5, 3.1, 3.6, 4.3
+    Pre-order Scan: 3.1, 2.2, 1.4, 2.5, 4.3, 3.6
+    Post-order Scan: 1.4, 2.5, 2.2, 3.6, 4.3, 3.1
+    BFS Scan: 3.1, 2.2, 4.3, 1.4, 2.5, 3.6
+    DFS Scan: 3.1, 2.2, 1.4, 2.5, 4.3, 3.6
+
+3-ary Tree (Doubles)
+
+    DFS Scan: 3.1, 2.2, 1.4, 2.5, 4.3, 3.6
+    BFS Scan: 3.1, 2.2, 4.3, 1.4, 2.5, 3.6
+
+Binary Tree (Integers)
+
+    BFS Scan: 10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+    In-order Scan: 40, 20, 50, 10, 60, 30, 70, 80, 90, 100
+
+String Tree
+
+    Root: "alpha"
+    Children: "beta", "gamma"
+    Subchildren: "delta", "epsilon" (under "beta")
+
+Complex Tree
+
+    DFS Scan: (1.0, 1.1), (-2.2, -2.2), (-5.5, 1.5), (6.6, 0), (0.3, -1.3), (7.7, 1), (8.8, 1.8), (4.4, 4.4)
+
+Cleaning Up
+
+To remove all generated files including object files, executables, and PNG images:
+
+sh
+
+make clean
+
+Conclusion
+
+This project demonstrates the implementation and visualization of a k-ary tree data structure with various traversal methods. The project includes a comprehensive set of tests to ensure the correctness of the tree operations and showcases the versatility of the tree with different data types.
